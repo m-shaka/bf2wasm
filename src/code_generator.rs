@@ -171,21 +171,23 @@ pub fn generate_wat(ops: &[BfOp]) -> String {
 
     (import "wasi_unstable" "fd_write" (func $fd_write (param i32 i32 i32 i32) (result i32)))
 
-    (memory $mem 1)
-    (export "memory" (memory $mem))
-    (global $index (mut i32) (i32.const 8))
+    (memory (export "memory") 1)
+    (global $index (mut i32) (i32.const 12))
 
     (func $write_one_byte
         i32.const 0
         global.get $index
         i32.store8
-        (i32.store8 (i32.const 4) (i32.const 1))
-        (call $fd_write
-            (i32.const 1)
-            (i32.const 0)
-            (i32.const 1)
-            (i32.const 30012)
-        )
+
+        i32.const 4
+        i32.const 1
+        i32.store8
+
+        i32.const 1
+        i32.const 0
+        i32.const 1
+        i32.const 8
+        call $fd_write
         drop
     )
 
@@ -193,13 +195,16 @@ pub fn generate_wat(ops: &[BfOp]) -> String {
         i32.const 0
         global.get $index
         i32.store8
-        (i32.store8 (i32.const 4) (i32.const 1))
-        (call $fd_read
-            (i32.const 0)
-            (i32.const 0)
-            (i32.const 1)
-            (i32.const 30012)
-        )
+
+        i32.const 4
+        i32.const 1
+        i32.store8
+
+        i32.const 0
+        i32.const 0
+        i32.const 1
+        i32.const 8
+        call $fd_read
         drop
     )
 
