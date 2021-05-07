@@ -34,7 +34,7 @@ fn generate_main(ops: &[BfOp]) -> Vec<String> {
     let sub = "i32.sub";
 
     let mut label_stack = LabelStack::new();
-    let mut wat_insts: Vec<String> = vec!["(local $mvDataTemp i32)".to_string()];
+    let mut wat_insts: Vec<String> = vec![];
     for op in ops {
         match op.kind {
             BfOpKind::IncData => {
@@ -90,11 +90,7 @@ fn generate_main(ops: &[BfOp]) -> Vec<String> {
             BfOpKind::JumpIfDataNotZero => {
                 let current = label_stack.pop();
                 let mut insts = vec![
-                    get_index.to_string(),
-                    load.to_string(),
-                    "if".to_string(),
                     format!("br $loop_{}", current),
-                    "end".to_string(),
                     "end".to_string(),
                     "end".to_string(),
                 ];
@@ -208,7 +204,7 @@ pub fn generate_wat(ops: &[BfOp]) -> String {
         drop
     )
 
-    (func $main (export "_start")
+    (func $main (export "_start") (local $mvDataTemp i32)
 "#
     .to_string();
     let indent = " ".repeat(8);
