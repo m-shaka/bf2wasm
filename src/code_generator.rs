@@ -173,11 +173,11 @@ pub fn generate_wat(ops: &[BfOp]) -> String {
     (func $write_one_byte
         i32.const 0
         global.get $index
-        i32.store8
+        i32.store
 
         i32.const 4
         i32.const 1
-        i32.store8
+        i32.store
 
         i32.const 1
         i32.const 0
@@ -190,11 +190,11 @@ pub fn generate_wat(ops: &[BfOp]) -> String {
     (func $read_one_byte
         i32.const 0
         global.get $index
-        i32.store8
+        i32.store
 
         i32.const 4
         i32.const 1
-        i32.store8
+        i32.store
 
         i32.const 0
         i32.const 0
